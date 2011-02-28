@@ -2,44 +2,55 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
+		
 		<title>shout.fm</title>
-		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
+		<link type="text/css" rel="stylesheet" href="css/jquerymobile.css" />
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.min.js"></script>
 		<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js"></script>
+		<script type="text/javascript" src="javascript/main.js"></script>
+		<script type="text/javascript" src="javascript/lastfm.js"></script>
+		<script type="text/javascript" src="javascript/Artist.js"></script>
+
 	</head>
+	
 	<body>
+		
 		<!-- Start of first page -->
 		<div data-role="page" id="foo">
 	
 			<div data-role="header">
-				<h1>shout.fm</h1>
-			</div><!-- /header -->
+				<h1 class="header">shout.fm</h1>
+			</div>
 		
 			<div data-role="content">	
-				<p>View internal page called <a href="#bar">bar</a></p>	
-			</div><!-- /content -->
+				<input type="text" value="Search for artists" id="searchField" />
+				<a href="#result"><input type="button" value="Go" id="performSearch" /></a>
+			</div>
 		
 			<div data-role="footer">
 				<h4>Jens Westerlund, 2011</h4>
-			</div><!-- /header -->
-		</div><!-- /page -->
+			</div>
+		</div>
+		<!-- /page -->
 	
 	
 		<!-- Start of second page -->
-		<div data-role="page" id="bar">
+		<div data-role="page" id="result">
 	
 			<div data-role="header">
-				<h1>Bar</h1>
-			</div><!-- /header -->
+				<h1 class="header">shout.fm</h1>
+			</div>
 		
 			<div data-role="content">	
-				<p>I'm first in the source order so I'm shown as the page.</p>		
-				<p><a href="#foo">Back to foo</a></p>	
-			</div><!-- /content -->
+				<span class="results"></span>	
+			</div>
 		
 			<div data-role="footer">
 				<h4>Jens Westerlund, 2011</h4>
-			</div><!-- /header -->
-		</div><!-- /page -->
+			</div>
+		</div>
+		<!-- /page -->
+
 	</body>
+	
 </html>
