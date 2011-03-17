@@ -4,27 +4,29 @@
 	<head>
 		
 		<title>shout.fm</title>
-		<link type="text/css" rel="stylesheet" href="css/jquerymobile.css" />
+		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
+		<link type="text/css" rel="stylesheet" href="css/style.css" />
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.5.min.js"></script>
 		<script type="text/javascript" src="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js"></script>
 		<script type="text/javascript" src="javascript/main.js"></script>
 		<script type="text/javascript" src="javascript/lastfm.js"></script>
 		<script type="text/javascript" src="javascript/Artist.js"></script>
+		<script type="text/javascript" src="javascript/jquery.yql.js"></script>
 
 	</head>
 	
 	<body>
 		
 		<!-- Start of first page -->
-		<div data-role="page" id="foo">
+		<div data-role="page" id="home">
 	
 			<div data-role="header">
 				<h1 class="header">shout.fm</h1>
 			</div>
 		
-			<div data-role="content">	
+			<div data-role="content" data-inline="true">	
 				<input type="text" value="Search for artists" id="searchField" />
-				<a href="#result"><input type="button" value="Go" id="performSearch" /></a>
+				<a href="#result" data-role="button" id="performSearch">Go</a>
 			</div>
 		
 			<div data-role="footer">
@@ -41,8 +43,8 @@
 				<h1 class="header">shout.fm</h1>
 			</div>
 		
-			<div data-role="content">	
-				<span class="results"></span>	
+			<div data-role="content">
+				<a href="#singleArtist" data-role="button" id="resultLink"></a>
 			</div>
 		
 			<div data-role="footer">
@@ -50,7 +52,26 @@
 			</div>
 		</div>
 		<!-- /page -->
-
+		
+		<div data-role="page" id="singleArtist">
+			<div data-role="header">
+				<h1 class="header">shout.fm</h1>
+			</div>
+			
+			<div data-role="content">
+				<a href="#" data-role="button" id="artistInfo">Info</a>
+				<a href="#" data-role="button" id="artistDisco">Albums</a>
+				<a href="#" data-role="button" id="artistEvent">Events</a>
+				<a href="#" data-role="button" id="artistSimilar">Similar</a>
+				<br />
+				<span class="info"></span>	
+			</div>
+			
+			<div data-role="footer">
+				<h4>Jens Westerlund, 2011</h4>
+			</div>
+		</div>
+		<!-- /page -->
 	</body>
 	
 </html>
