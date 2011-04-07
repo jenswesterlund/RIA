@@ -128,7 +128,7 @@ Artist.prototype.setEvents = function(data){
 			if(data._attr.total > 1){
 				var arr = new Array();
 				for(var i=0; i <= (data._attr.total - 1); i++){
-					arr[i] = "Date: " + data.event[i].startDate + " Location:" + data.event[i].venue.name + ", " + data.event[i].venue.location.city + ", " + data.event[i].venue.location.country;
+					arr[i] = "<b>When?</b> " + data.event[i].startDate + "<br /><b>Where?</b> " + data.event[i].venue.name + ", " + data.event[i].venue.location.city + ", " + data.event[i].venue.location.country + "<hr />";
 				}
 				this.events = arr;
 			}

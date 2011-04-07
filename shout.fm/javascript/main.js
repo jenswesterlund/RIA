@@ -33,16 +33,13 @@ var main = {
 		this.init();
 	},
 	
-	artist: {
-		obj: null
-	},
-	
 	/**
 	 * @function
 	 * @name init
 	 * @description Initalizes the application
 	 */
 	init: function(){
+		this.dom.foo
 		this.dom.searchField.click(function(){
 			main.dom.searchField.val("");
 		});
@@ -163,7 +160,8 @@ var main = {
 		var arr = artist.getEvents();
 		if(arr != null){
 			for(var i=0; i <= (arr.length - 1); i++){
-				$("<li>" + arr[i] + "</li>").appendTo(this.dom.events);
+				//$("<li>" + arr[i] + "</li>").appendTo(this.dom.events);
+				$(arr[i]).appendTo(this.dom.events);
 			}
 		}
 		else{
