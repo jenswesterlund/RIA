@@ -5,3 +5,13 @@ li{
 	text-decoration: none;
 	color:black;
 }
+.footer{
+	text-align: center;
+	font-size: 10pt;
+	padding:4px;
+}
+.logo{
+	text-align: center;
+	background-color: white;
+	padding:5px;
+}

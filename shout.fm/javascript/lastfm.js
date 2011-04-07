@@ -8,7 +8,7 @@
 var lastfm = {
 
 	url: "http://ws.audioscrobbler.com/2.0/?method=",
-	api_key: "",
+	api_key: "29ef8ab233fd9e3b09457c6c16c2aa01",
 	format: "format=json",
 	
 	/**
@@ -108,8 +108,13 @@ var lastfm = {
 				function(data){
 					switch(option){
 						case 1:
-							art = new Artist(data.query.results.results.artistmatches.artist[0].name);
-							break;
+							if(data.query.results.results.artistmatches.artist[0] != undefined){
+								art = new Artist(data.query.results.results.artistmatches.artist[0].name);
+								break;
+							}
+							else{
+								callback.call(this, null);
+							}
 						case 2:
 							var art = artist;
 							art.setInfo(data.query.results.artist.bio.summary);
@@ -131,7 +136,7 @@ var lastfm = {
 					}
 					
 					if($.isFunction(callback)){
-						callback.call( this, art );
+						callback.call(this, art);
 					}					
 				}
 		);

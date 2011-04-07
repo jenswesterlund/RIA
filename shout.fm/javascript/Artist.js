@@ -11,8 +11,13 @@
  */
 
 function Artist(name) {
-
-	this.name = name;
+	
+	if(name != undefined || name != null){
+		this.name = name;
+	}
+	else{
+		this.name = null;
+	}
 	this.info = "unset";
 	this.disco = "unset";
 	this.events = "unset";
@@ -49,6 +54,11 @@ Artist.prototype.getName = function(){
  */
 Artist.prototype.setInfo = function(data){
 	var str = data.replace(/(<([^>]+)>)/ig,"");
+	str = str.replace(/&quot;/gi, '"');
+	str = str.replace(/&amp;/gi, "&");
+	str = str.replace(/&aring;/gi, "å");
+	str = str.replace(/&auml;/gi, "ä");
+	str = str.replace(/&ouml;/gi, "ö");
 	this.info = str;
 };
 
@@ -134,7 +144,7 @@ Artist.prototype.setEvents = function(data){
 		}
 	}
 	else{
-		this.events = null;
+		this.events = "unset";
 	}
 };
 
@@ -156,12 +166,17 @@ Artist.prototype.getEvents = function(){
  * @returns {Void}
  */
 Artist.prototype.setSimilar = function(data){
-	var arr = new Array();
+	if(data != null || data != undefined){
+		var arr = new Array();
 	
-	for(var i=0; i <= 15; i++){
-		arr[i] = data.artist[i].name;
+		for(var i=0; i <= 15; i++){
+			arr[i] = data.artist[i].name;
+		}
+		this.similar = arr;
 	}
-	this.similar = arr;
+	else{
+		this.similar = "unset";
+	}
 };
 
 /**

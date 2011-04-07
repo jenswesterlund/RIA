@@ -5,10 +5,11 @@ var main = {
 	 * @description Holds references to the dom-objects in application
 	 */
 	dom: {
-		title: "title",
-		header: ".header",
 		resultTitle: ".results",
 		info: ".info",
+		disco: ".disco",
+		events: ".events",
+		similar: ".similar",
 		performSearch: "#performSearch",
 		searchField: "#searchField",
 		artistClick: "#artistClick",
@@ -17,15 +18,6 @@ var main = {
 		artistDisco: "#artistDisco",
 		artistEvent: "#artistEvent",
 		artistSimilar: "#artistSimilar"
-	},
-	
-	/**
-	 * @object
-	 * @name api
-	 * @description Contains lastfm-apikey
-	 */
-	api: {
-		key: "29ef8ab233fd9e3b09457c6c16c2aa01"
 	},
 	
 	/**
@@ -41,12 +33,20 @@ var main = {
 		this.init();
 	},
 	
+	artist: {
+		obj: null
+	},
+	
 	/**
 	 * @function
 	 * @name init
 	 * @description Initalizes the application
 	 */
 	init: function(){
+		this.dom.searchField.click(function(){
+			main.dom.searchField.val("");
+		});
+		
 		this.dom.performSearch.click(function(){
 			main.search();
 		});
@@ -58,7 +58,7 @@ var main = {
 	 * @description The applications searchfunction
 	 */
 	search: function(art){
-		lastfm.api_key = this.api.key;
+		$.mobile.pageLoading();
 		lastfm.search(encodeURIComponent(this.dom.searchField.val()), this.searchCallback);
 	},
 	
@@ -69,11 +69,15 @@ var main = {
 	 * @description Searchcallback. Recieves data and call renderNewArtist with it 
 	 */
 	searchCallback: function(artist){
-		this.dom.header.text("shout.fm - Searchresults");
-		this.dom.resultLink.text(artist.getName());
-		this.dom.resultLink.click(function(){
+		if(artist != null){
 			main.renderNewArtist(artist);
-		});
+			$.mobile.pageLoading(true);
+			$.mobile.changePage('#singleArtist', 'slide', false, true);
+		}
+		else{
+			$.mobile.pageLoading(true);
+			$.mobile.changePage('#error', 'slide', false, true);
+		}
 	},
 	
 	/**
@@ -83,16 +87,15 @@ var main = {
 	 * @description Renders a new artist and set click-handlers on artist navigation menu
 	 */
 	renderNewArtist: function(artist){
-	
 		lastfm.getInfo(encodeURIComponent(artist.getName()), this.showSingleArtistInfo, artist);
+		this.dom.artistInfo.trigger("expand");
 		
-		this.dom.artistInfo.click(function(){
-			main.dom.info.text("");
+		this.dom.artistInfo.live("expand", function(){
 			main.showSingleArtistInfo(artist);
 		});
 		
-		this.dom.artistDisco.click(function(){
-			main.dom.info.text("");
+		this.dom.artistDisco.live("expand", function(){
+			main.dom.disco.text("");
 			if(artist.getDisco() == "unset"){
 				lastfm.getAlbums(encodeURIComponent(artist.getName()), main.showSingleArtistDisco, artist);
 			}
@@ -101,8 +104,8 @@ var main = {
 			}
 		});
 		
-		this.dom.artistEvent.click(function(){
-			main.dom.info.text("");
+		this.dom.artistEvent.live("expand", function(){
+			main.dom.events.text("");
 			if(artist.getEvents() == "unset"){
 				lastfm.getEvents(encodeURIComponent(artist.getName()), main.showSingleArtistEvents, artist);
 			}
@@ -111,8 +114,8 @@ var main = {
 			}
 		});
 		
-		this.dom.artistSimilar.click(function(){
-			main.dom.info.text("");
+		this.dom.artistSimilar.live("expand", function(){
+			main.dom.similar.text("");
 			if(artist.getSimilar() == "unset"){
 				lastfm.getSimilar(encodeURIComponent(artist.getName()), main.showSingleArtistSimilar, artist);
 			}
@@ -129,7 +132,6 @@ var main = {
 	 * @description Shows info about selected artist
 	 */
 	showSingleArtistInfo: function(artist){
-		this.dom.header.text(artist.getName() + " - Biography");
 		this.dom.info.text(artist.getInfo());
 	},
 	
@@ -140,15 +142,14 @@ var main = {
 	 * @description Shows artist discography
 	 */
 	showSingleArtistDisco: function(artist){
-		this.dom.header.text(artist.getName() + " - Discography");
 		var arr = artist.getDisco();
 		if(arr != null){
 			for(var i=0; i <= (arr.length - 1); i++){
-				$('<li>' + arr[i] + '</li>').appendTo(this.dom.info);
+				$('<li>' + arr[i] + '</li>').appendTo(this.dom.disco);
 			}
 		}
 		else{
-			this.dom.info.text("Couldnt find any albums");
+			this.dom.disco.text("Couldnt find any albums");
 		}
 	},
 	
@@ -159,15 +160,14 @@ var main = {
 	 * @description Shows artist eventlist
 	 */
 	showSingleArtistEvents: function(artist){
-		this.dom.header.text(artist.getName() + " - Events");
 		var arr = artist.getEvents();
 		if(arr != null){
 			for(var i=0; i <= (arr.length - 1); i++){
-				$("<li>" + arr[i] + "</li>").appendTo(this.dom.info);
+				$("<li>" + arr[i] + "</li>").appendTo(this.dom.events);
 			}
 		}
 		else{
-			this.dom.info.text("No upcoming events");
+			this.dom.events.text("No upcoming events");
 		}
 	},
 	
@@ -178,13 +178,12 @@ var main = {
 	 * @description Shows similar artists to the selected artist, making them clickable aswell
 	 */
 	showSingleArtistSimilar: function(artist){
-		this.dom.header.text(artist.getName() + " - Similar Artists");
 		var arr = artist.getSimilar();
 		for(var i=0; i <= (arr.length - 1); i++){
-			$("<li><a href='" + arr[i] + "' data-role='button' data-inline='true'>" + arr[i] + '</a></li>')
-			.appendTo(this.dom.info)
+			$("<a href='" + arr[i] + "' data-role='button' data-inline='true'>" + arr[i] + '</a>')
+			.appendTo(this.dom.similar)
 			.click(function(){
-				var name = $(this).find("a").attr("href");
+				var name = $(this).attr("href");				
 				artist = new Artist(name);
 				main.renderNewArtist(artist);
 				return false;

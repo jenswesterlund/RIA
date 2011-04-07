@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 	<head>
-		
+		<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 		<title>shout.fm</title>
 		<link type="text/css" rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
 		<link type="text/css" rel="stylesheet" href="css/style.css" />
@@ -21,54 +21,72 @@
 		<div data-role="page" id="home">
 	
 			<div data-role="header">
-				<h1 class="header">shout.fm</h1>
+				<div class="logo">
+					<img src="media/logo.png" alt="shout.fm" />
+				</div>
 			</div>
 		
 			<div data-role="content" data-inline="true">	
-				<input type="text" value="Search for artists" id="searchField" />
-				<a href="#result" data-role="button" id="performSearch">Go</a>
+				<input type="text" id="searchField" placeHolder="Search for artists" value="Search for artists"/>
+				<input type="button" data-role="button" id="performSearch" value="Go" />
 			</div>
 		
 			<div data-role="footer">
-				<h4>Jens Westerlund, 2011</h4>
+				<div class="footer">&copy; Jens Westerlund</div>
 			</div>
 		</div>
 		<!-- /page -->
 	
 	
 		<!-- Start of second page -->
-		<div data-role="page" id="result">
+		<div data-role="page" id="error">
 	
 			<div data-role="header">
-				<h1 class="header">shout.fm</h1>
+				<div class="logo">
+					<img src="media/logo.png" alt="shout.fm" />
+				</div>
 			</div>
 		
 			<div data-role="content">
-				<a href="#singleArtist" data-role="button" id="resultLink"></a>
+				<span>Sorry, no artists matched your query</span>
 			</div>
 		
 			<div data-role="footer">
-				<h4>Jens Westerlund, 2011</h4>
+				<div class="footer">&copy; Jens Westerlund</div>
 			</div>
 		</div>
 		<!-- /page -->
 		
 		<div data-role="page" id="singleArtist">
 			<div data-role="header">
-				<h1 class="header">shout.fm</h1>
+				<div class="logo">
+					<img src="media/logo.png" alt="shout.fm" />
+				</div>
 			</div>
 			
 			<div data-role="content">
-				<a href="#" data-role="button" id="artistInfo">Info</a>
-				<a href="#" data-role="button" id="artistDisco">Albums</a>
-				<a href="#" data-role="button" id="artistEvent">Events</a>
-				<a href="#" data-role="button" id="artistSimilar">Similar</a>
-				<br />
-				<span class="info"></span>	
+				<div data-role="collapsible-set">
+					<div data-role="collapsible" id="artistInfo">
+						<h3>Info</h3>
+						<span class="info"></span>
+					</div>
+					<div data-role="collapsible" data-collapsed="true" id="artistDisco">
+						<h3>Albums</h3>
+						<span class="disco"></span>
+					</div>
+					<div data-role="collapsible" data-collapsed="true" id="artistEvent">
+						<h3>Events</h3>
+						<span class="events"></span>
+					</div>
+					<div data-role="collapsible" data-collapsed="true" id="artistSimilar">
+						<h3>Similar</h3>
+						<span class="similar"></span>
+					</div>
+				</div>
 			</div>
 			
 			<div data-role="footer">
-				<h4>Jens Westerlund, 2011</h4>
+				<div class="footer">&copy; Jens Westerlund</div>
 			</div>
 		</div>
 		<!-- /page -->
